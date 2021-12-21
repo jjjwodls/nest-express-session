@@ -11,16 +11,17 @@ async function bootstrap() {
       origin: true,
     },
   });
+
   app.set('trust proxy', 1);
+
+  app.use(cookieParser('my-secret'));
   const sessionOption = {
     secret: 'my-secret',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
+    cookie: { httpOnly: true },
   };
-
   app.use(session(sessionOption));
-  app.use(cookieParser());
 
   await app.listen(3001);
 }
